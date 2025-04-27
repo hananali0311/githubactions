@@ -12,7 +12,11 @@ jobs:
     runs-on: [self-hosted, linux]  # Using your self-hosted runner
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Check Python version
+        run: python3 --version
 
       - name: Run a one-line script
         run: echo Hello, world!
@@ -20,10 +24,14 @@ jobs:
       - name: Run Python script
         run: |
           python3 app.py
+          
       - name: Create Artifact
         run: |
-          mkdir output
+          mkdir -p output
           cp app.py output/
+
+      - name: List files in output directory
+        run: ls -l output/
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
